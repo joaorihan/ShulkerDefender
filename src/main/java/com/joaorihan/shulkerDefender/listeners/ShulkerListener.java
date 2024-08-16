@@ -5,11 +5,16 @@ import com.joaorihan.shulkerDefender.ShulkerDefender;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 
 import java.util.Objects;
 
@@ -41,14 +46,42 @@ public class ShulkerListener implements Listener {
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent e){
-        System.out.println(e.getInventory().getType().getDefaultTitle());
+        if (Checks.isPluginShulker(Objects.requireNonNull(e.getInventory().getLocation()).getBlock())) {
+            e.setCancelled(true);
+            e.getPlayer().sendMessage(ChatColor.RED + "Você não pode abrir uma caixa especial.");
+        }
+    }
 
-        if (!Checks.isPluginShulker(Objects.requireNonNull(e.getInventory().getLocation()).getBlock()))
+    @EventHandler
+    public void onCraftItem(PrepareItemCraftEvent e){
+        //debug
+        if (e.getRecipe() == null)
+            return;
+        getPlugin().getLogger().info("CraftItemEvent called");
+        getPlugin().getLogger().info(e.getRecipe().getResult().getType().toString());
+
+        if (Checks.isPluginShulker(e.getRecipe().getResult().getType())){
+            Objects.requireNonNull(e.getInventory().getResult()).setType(Material.AIR);
+            //debug
+            getPlugin().getLogger().info("Event cancelled");
+        }
+
+    }
+
+    @EventHandler
+    public void onItemPickup(EntityPickupItemEvent e){
+        //debug
+        plugin.getLogger().info("EntityPickupItemEvent called");
+        if (!(e.getEntity() instanceof Player))
+            return;
+
+        if (!Checks.isPluginShulker(e.getItem().getItemStack().getType()))
             return;
 
 
-        e.setCancelled(true);
-        e.getPlayer().sendMessage(ChatColor.RED + "Você não pode abrir uma caixa especial.");
+        getPlugin().getShulkerManager().startWitherTimer((Player) e.getEntity());
+
+
     }
 
 

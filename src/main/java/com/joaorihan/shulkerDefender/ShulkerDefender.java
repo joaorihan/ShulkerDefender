@@ -1,6 +1,7 @@
 package com.joaorihan.shulkerDefender;
 
 import com.joaorihan.shulkerDefender.listeners.ShulkerListener;
+import com.joaorihan.shulkerDefender.managers.ShulkerManager;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,10 +11,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class ShulkerDefender extends JavaPlugin {
 
     private ShulkerDefender plugin;
-
+    private ShulkerManager shulkerManager;
     @Override
     public void onEnable() {
         setPlugin(this);
+
+        setShulkerManager(new ShulkerManager(plugin));
 
         getConfig().options().copyDefaults();
         saveDefaultConfig();
