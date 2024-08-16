@@ -1,4 +1,4 @@
-package com.joaorihan.shulkerDefender;
+package com.joaorihan.shulkerDefender.util;
 
 import lombok.Getter;
 import org.bukkit.Material;
