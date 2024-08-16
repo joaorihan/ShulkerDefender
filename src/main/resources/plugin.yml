@@ -1,0 +1,5 @@
+name: ShulkerDefender
+author: "Super"
+version: '0.1.0-TEST'
+main: com.joaorihan.shulkerDefender.ShulkerDefender
+api-version: '1.21'
