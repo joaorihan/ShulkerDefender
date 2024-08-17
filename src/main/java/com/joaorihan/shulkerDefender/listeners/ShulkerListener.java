@@ -11,10 +11,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
-import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.ComplexRecipe;
+import org.bukkit.inventory.Recipe;
 
 import java.util.Objects;
 
@@ -54,18 +54,12 @@ public class ShulkerListener implements Listener {
 
     @EventHandler
     public void onCraftItem(PrepareItemCraftEvent e){
-        //debug
         if (e.getRecipe() == null)
             return;
-        getPlugin().getLogger().info("CraftItemEvent called");
-        getPlugin().getLogger().info(e.getRecipe().getResult().getType().toString());
 
-        if (Checks.isPluginShulker(e.getRecipe().getResult().getType())){
-            Objects.requireNonNull(e.getInventory().getResult()).setType(Material.AIR);
-            //debug
-            getPlugin().getLogger().info("Event cancelled");
+        if (e.getRecipe() instanceof ComplexRecipe){
+            Objects.requireNonNull(e.getInventory().getResult()).setAmount(0);
         }
-
     }
 
     @EventHandler
@@ -80,8 +74,6 @@ public class ShulkerListener implements Listener {
 
 
         getPlugin().getShulkerManager().startWitherTimer((Player) e.getEntity());
-
-
     }
 
 

@@ -5,7 +5,6 @@ import com.joaorihan.shulkerDefender.util.Checks;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Shulker;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
@@ -24,6 +23,11 @@ public class ShulkerManager {
     }
 
     public void startWitherTimer(Player player){
+
+        if (!plugin.getConfig().getBoolean("wither-damage")){
+            return;
+        }
+
         timers.put(player.getUniqueId(), 0);
         //debug
         plugin.getLogger().info("Started timer for " + player.getName());
@@ -34,7 +38,7 @@ public class ShulkerManager {
                     //debug
                     plugin.getLogger().info("Increased timer for " + player.getName());
                     increaseTimer(player.getUniqueId());
-                    if (getTimers().get(player.getUniqueId()) >= 600)
+                    if (getTimers().get(player.getUniqueId()) >= 10)
                         player.addPotionEffect(PotionEffectType.WITHER.createEffect(60, 0));
                     return;
                 }
