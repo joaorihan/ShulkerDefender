@@ -1,5 +1,6 @@
 package com.joaorihan.shulkerDefender;
 
+import com.joaorihan.shulkerDefender.listeners.LossPreventionListener;
 import com.joaorihan.shulkerDefender.listeners.ShulkerListener;
 import com.joaorihan.shulkerDefender.managers.PlayerManager;
 import com.joaorihan.shulkerDefender.managers.ShulkerManager;
@@ -23,7 +24,9 @@ public final class ShulkerDefender extends JavaPlugin {
 
         getConfig().options().copyDefaults();
         saveDefaultConfig();
+
         new ShulkerListener(plugin);
+        new LossPreventionListener(plugin);
     }
 
     @Override

@@ -4,6 +4,8 @@ import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 @UtilityClass
 public class Checks {
@@ -24,6 +26,14 @@ public class Checks {
     public boolean isPluginShulker(@NonNull Material type){
         for (Shulker shulker : Shulker.values())
             if (shulker.getType().equals(type))
+                return true;
+
+        return false;
+    }
+
+    public boolean containsPluginShulker(@NonNull Inventory inventory){
+        for (ItemStack itemStack : inventory.getContents())
+            if (itemStack != null && isPluginShulker(itemStack.getType()))
                 return true;
 
         return false;

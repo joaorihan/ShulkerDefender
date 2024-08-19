@@ -5,7 +5,6 @@ import com.joaorihan.shulkerDefender.ShulkerDefender;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,8 +12,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ComplexRecipe;
-import org.bukkit.inventory.Recipe;
 
 import java.util.Objects;
 
@@ -58,6 +57,7 @@ public class ShulkerListener implements Listener {
             return;
 
         if (e.getRecipe() instanceof ComplexRecipe){
+            plugin.getLogger().info(e.getRecipe().getResult().getType().toString());
             Objects.requireNonNull(e.getInventory().getResult()).setAmount(0);
         }
     }
@@ -76,5 +76,9 @@ public class ShulkerListener implements Listener {
         getPlugin().getShulkerManager().startWitherTimer((Player) e.getEntity());
     }
 
+    @EventHandler
+    public void onQuit(PlayerQuitEvent e){
+        getPlugin().getShulkerManager().cancelTasks(e.getPlayer().getUniqueId());
+    }
 
 }
