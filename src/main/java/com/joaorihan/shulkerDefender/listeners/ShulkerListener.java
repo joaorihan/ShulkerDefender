@@ -30,6 +30,8 @@ public class ShulkerListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e){
+        if (getPlugin().getPlayerManager().isInBypassMode(e.getPlayer()))
+            return;
         Player player = e.getPlayer();
 
         if (Bukkit.getOnlinePlayers().size() >= getPlugin().getConfig().getInt("minimum-players")
@@ -45,6 +47,9 @@ public class ShulkerListener implements Listener {
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent e){
+        if (getPlugin().getPlayerManager().isInBypassMode((Player) e.getPlayer()))
+            return;
+
         if (Checks.isPluginShulker(Objects.requireNonNull(e.getInventory().getLocation()).getBlock())) {
             e.setCancelled(true);
             e.getPlayer().sendMessage(ChatColor.RED + "Você não pode abrir uma caixa especial.");

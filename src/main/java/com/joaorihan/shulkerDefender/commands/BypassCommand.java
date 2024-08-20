@@ -12,8 +12,8 @@ public class BypassCommand extends Command{
 
     public BypassCommand(){
         super("bypass",
-                new String[]{""},
-                "Toggles bypasse for all shulker limitations",
+                new String[]{},
+                "Toggles bypass for all shulker limitations",
                 "shulkerdefender.bypass");
     }
 
@@ -21,7 +21,6 @@ public class BypassCommand extends Command{
     @Override
     public void execute(CommandSender sender, String[] args) {
         // /bypass <on/off> <player>
-
         if (!(sender instanceof Player player))
             return;
 
@@ -32,11 +31,32 @@ public class BypassCommand extends Command{
 
         switch (args.length) {
             case 0:
-                if (getPlugin().getPlayerManager().isInBypassMode(player)) {
+                if (getPlugin().getPlayerManager().isInBypassMode(player))
                     getPlugin().getPlayerManager().removeBypassedPlayer(player);
-                } else {
+                else
                     getPlugin().getPlayerManager().addBypassedPlayer(player);
+                break;
 
+            case 1:
+                switch (args[0]){
+                    case "on":
+                        if (getPlugin().getPlayerManager().isInBypassMode(player)) {
+                            player.sendMessage(ChatColor.RED + "Você não está com o bypass ligado.");
+                            return;
+                        }
+
+                        getPlugin().getPlayerManager().addBypassedPlayer(player);
+                        break;
+
+                    case "off":
+                        if (!getPlugin().getPlayerManager().isInBypassMode(player)) {
+                            player.sendMessage(ChatColor.RED + "Você já está com o bypass ligado.");
+                            return;
+                        }
+                        getPlugin().getPlayerManager().addBypassedPlayer(player);
+                        break;
+                    default:
+                        player.sendMessage(ChatColor.RED + "Usagem incorreta.");
                 }
                 break;
 
@@ -50,23 +70,27 @@ public class BypassCommand extends Command{
 
                 switch (args[0]){
                     case "on":
-                        if (!getPlugin().getPlayerManager().isInBypassMode(target)) {
+                        if (getPlugin().getPlayerManager().isInBypassMode(target)) {
                             player.sendMessage(ChatColor.RED + "Este jogador não está com o bypass ligado.");
                             return;
                         }
-
                         getPlugin().getPlayerManager().addBypassedPlayer(target);
                         player.sendMessage(ChatColor.GREEN + "Você ligou o bypass para " + target.getName());
                         break;
 
                     case "off":
-                        //todo finish
+                        if (!getPlugin().getPlayerManager().isInBypassMode(target)) {
+                            player.sendMessage(ChatColor.RED + "Este jogador já está com o bypass ligado.");
+                            return;
+                        }
+                        getPlugin().getPlayerManager().addBypassedPlayer(target);
+                        player.sendMessage(ChatColor.GREEN + "Você desligou o bypass para " + target.getName());
                         break;
                     default:
+                        player.sendMessage(ChatColor.RED + "Usagem incorreta.");
                         break;
                 }
-
-
+            break;
         }
     }
 

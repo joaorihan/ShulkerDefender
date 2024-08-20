@@ -1,5 +1,6 @@
 package com.joaorihan.shulkerDefender;
 
+import com.joaorihan.shulkerDefender.commands.BypassCommand;
 import com.joaorihan.shulkerDefender.listeners.LossPreventionListener;
 import com.joaorihan.shulkerDefender.listeners.ShulkerListener;
 import com.joaorihan.shulkerDefender.managers.PlayerManager;
@@ -19,12 +20,18 @@ public final class ShulkerDefender extends JavaPlugin {
     public void onEnable() {
         setPlugin(this);
 
+        // Register Managers
         setShulkerManager(new ShulkerManager(plugin));
         setPlayerManager(new PlayerManager());
 
+        // Setup Configs
         getConfig().options().copyDefaults();
         saveDefaultConfig();
 
+        // Register Commands
+        new BypassCommand();
+
+        // Register Listeners
         new ShulkerListener(plugin);
         new LossPreventionListener(plugin);
     }
