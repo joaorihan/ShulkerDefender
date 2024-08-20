@@ -28,8 +28,7 @@ public class LossPreventionListener implements Listener {
             return;
 
         e.setCancelled(true);
-        //debug
-        plugin.getLogger().info("Prevent Despawn for a shulker");
+
     }
 
 
@@ -46,9 +45,6 @@ public class LossPreventionListener implements Listener {
 
     @EventHandler
     public void onItemDamage(EntityDamageEvent e) {
-        //debug
-        plugin.getLogger().info(e.getCause().toString());
-
         if (!(e.getEntity() instanceof Item))
             return;
 
@@ -56,16 +52,11 @@ public class LossPreventionListener implements Listener {
             return;
 
         e.setCancelled(true);
-        //debug
-        plugin.getLogger().info("Prevent destruction for a shulker");
     }
 
     @EventHandler
     public void onEntityExplode(BlockExplodeEvent e) {
-        //debug
-        plugin.getLogger().info("BlockExplodeEvent called''w");
         //todo fix
-
         for (Block block : e.blockList()){
             if (Checks.isPluginShulker(block)){
                 e.setCancelled(true);

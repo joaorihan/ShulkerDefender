@@ -40,9 +40,6 @@ public class ShulkerListener implements Listener {
 
         player.sendMessage(ChatColor.RED + "Você deve aguardar mais jogadores estarem online para quebrar este bloco! ("+getPlugin().getConfig().getInt("minimum-players")+")");
         e.setCancelled(true);
-        //debug
-        plugin.getLogger().info("[DEBUG] BlockBreakEvent cancelled");
-
     }
 
     @EventHandler
@@ -62,15 +59,12 @@ public class ShulkerListener implements Listener {
             return;
 
         if (e.getRecipe() instanceof ComplexRecipe){
-            plugin.getLogger().info(e.getRecipe().getResult().getType().toString());
             Objects.requireNonNull(e.getInventory().getResult()).setAmount(0);
         }
     }
 
     @EventHandler
     public void onItemPickup(EntityPickupItemEvent e){
-        //debug
-        plugin.getLogger().info("EntityPickupItemEvent called");
         if (!(e.getEntity() instanceof Player))
             return;
 

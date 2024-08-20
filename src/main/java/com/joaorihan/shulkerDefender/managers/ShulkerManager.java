@@ -31,8 +31,6 @@ public class ShulkerManager {
         }
 
         timers.put(player.getUniqueId(), 0);
-        // Debug
-        plugin.getLogger().info("Started timer for " + player.getName());
 
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             if (!Checks.containsPluginShulker(player.getInventory())){
@@ -40,7 +38,6 @@ public class ShulkerManager {
                 return;
             }
 
-            plugin.getLogger().info("Increased timer for " + player.getName());
             increaseTimer(player.getUniqueId());
 
             sendWitherAlert(player);
@@ -69,9 +66,6 @@ public class ShulkerManager {
         tasks.get(player).forEach(BukkitTask::cancel);
         tasks.remove(player);
         timers.remove(player);
-        plugin.getLogger().info("Cancelling tasks for" + player.toString());
-
-
     }
 
 
