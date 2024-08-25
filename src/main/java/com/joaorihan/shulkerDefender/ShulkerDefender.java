@@ -38,6 +38,8 @@ public final class ShulkerDefender extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        getPlayerManager().clearBypassedPlayers();
+
+
     }
 }

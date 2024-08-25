@@ -23,6 +23,11 @@ public class Checks {
         return false;
     }
 
+    /**
+     * Used to check if a material is, or not a {@link Shulker}
+     * @param type Material to be compared
+     * @return {@code true} if material is an instance of one of the selected {@link Shulker}
+     */
     public boolean isPluginShulker(@NonNull Material type){
         for (Shulker shulker : Shulker.values())
             if (shulker.getType().equals(type))
@@ -31,6 +36,11 @@ public class Checks {
         return false;
     }
 
+    /**
+     * Checks if an inventory's content has a {@link Shulker}
+     * @param inventory Inventory to be checked
+     * @return {@code true} if the inventory contains a {@link Shulker}
+     */
     public boolean containsPluginShulker(@NonNull Inventory inventory){
         for (ItemStack itemStack : inventory.getContents())
             if (itemStack != null && isPluginShulker(itemStack.getType()))
